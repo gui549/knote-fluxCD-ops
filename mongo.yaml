@@ -56,6 +56,7 @@ spec:
                 operator: In
                 values:
                 - mongo
+            topologyKey: "kubernetes.io/hostname"
   volumeClaimTemplates:
   - metadata:
       name: mongo-pvc
