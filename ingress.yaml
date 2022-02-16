@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: knote-ingress
@@ -26,7 +26,5 @@ spec:
         - path: /
           pathType: Prefix
           backend:
-            service:
-              name: knote
-              port:
-                number: 80
+            serviceName: knote
+            servicePort: 80
