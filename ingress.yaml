@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: knote-ingress
@@ -8,23 +8,35 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/actions.redirect-write: >
-      {"type":"redirect","redirectConfig":{"host":"kong-static-web-ops.s3-website.ap-northeast-3.amazonaws.com","path":"/write","port":"80","protocol":"HTTP","query":"k=v","statusCode":"HTTP_301"}}
+      {"type":"redirect", "redirectConfig":{"host":"kong-static-web-ops.s3-website.ap-northeast-3.amazonaws.com","path":"/write","port":"80","protocol":"HTTP","query":"#{query}","statusCode":"HTTP_301"}}
+    alb.ingress.kubernetes.io/conditions.redirect-write: >
+      [{"field":"http-request-method", "httpRequestMethodConfig":{"Values":["GET"]}}]
     alb.ingress.kubernetes.io/actions.redirect-static: >
-      {"type":"redirect","redirectConfig":{"host":"http://kong-static-web-ops.s3-website.ap-northeast-3.amazonaws.com","path":"/static/","port":"80","protocol":"HTTP","query":"","statusCode":"HTTP_302"}}
+      {"type":"redirect", "redirectConfig":{"host":"kong-static-web-ops.s3-website.ap-northeast-3.amazonaws.com","path":"/#{path}","port":"80","protocol":"HTTP","query":"#{query}","statusCode":"HTTP_301"}}
+    alb.ingress.kubernetes.io/conditions.redirect-static: >
+      [{"field":"http-request-method", "httpRequestMethodConfig":{"Values":["GET"]}}]
 spec:
   rules:
     - http:
         paths:
         - path: /note/new
+          pathType: Exact
           backend:
-            serviceName: redirect-write
-            servicePort: use-annotation
-        - path: /static
+            service:
+              name: redirect-write
+              port: 
+                name: use-annotation
+        - path: /static/
+          pathType: Prefix
           backend:
-            serviceName: redirect-static
-            servicePort: use-annotation
+            service:
+              name: redirect-static
+              port: 
+                name: use-annotation
         - path: /
           pathType: Prefix
           backend:
-            serviceName: knote
-            servicePort: 80
+            service:
+              name: knote
+              port: 
+                number: 80
