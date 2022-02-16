@@ -1,7 +1,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
-  name: knote-dev
+  name: knote-ops
   namespace: flux-system
 spec:
   imageRepositoryRef:
