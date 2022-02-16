@@ -47,16 +47,16 @@ spec:
         volumeMounts:
         - name: mongo-pvc
           mountPath: /data/db
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - mongo
-            topologyKey: "kubernetes.io/hostname"
+#      affinity:
+#        podAntiAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#          - labelSelector:
+#              matchExpressions:
+#              - key: app
+#                operator: In
+#                values:
+#                - mongo
+#            topologyKey: "kubernetes.io/hostname"
   volumeClaimTemplates:
   - metadata:
       name: mongo-pvc
