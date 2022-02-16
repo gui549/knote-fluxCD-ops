@@ -47,6 +47,15 @@ spec:
         volumeMounts:
         - name: mongo-pvc
           mountPath: /data/db
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - mongo
   volumeClaimTemplates:
   - metadata:
       name: mongo-pvc
