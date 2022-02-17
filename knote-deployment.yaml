@@ -24,3 +24,13 @@ spec:
         env:
         - name: spring.data.mongodb.uri
           value: mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017,mongo-3.mongo:27017,mongo-4.mongo:27017/dev?readPreference=secondary&replicaSet=rs0
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: run
+                operator: In
+                values:
+                - knote
+            topologyKey: "kubernetes.io/hostname"
