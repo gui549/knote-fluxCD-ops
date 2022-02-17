@@ -27,10 +27,12 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: run
-                operator: In
-                values:
-                - knote
-            topologyKey: "kubernetes.io/hostname"
+          - weight: 1
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: run
+                  operator: In
+                  values:
+                  - knote
+              topologyKey: "kubernetes.io/hostname"
