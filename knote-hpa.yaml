@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: knote-hpa
@@ -10,4 +10,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: knote-ops
-  targetCPUUtilizationPercentage: 60
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization 
+        averageUtilization: 60 
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 180
