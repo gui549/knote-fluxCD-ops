@@ -30,6 +30,14 @@ spec:
         - name: spring.data.mongodb.uri
           value: mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017,mongo-3.mongo:27017,mongo-4.mongo:27017/dev?readPreference=secondary&replicaSet=rs0
       affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: eks.amazonaws.com/nodegroup
+                  operator: In
+                  values:
+                  - kong-nodegroup-managed-ops-1
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -41,3 +49,9 @@ spec:
                   values:
                   - knote
               topologyKey: "kubernetes.io/hostname"
+      tolerations:
+      - key: "run"
+        value: "knote"  
+        operator: "Equal"
+        effect: "NoExecute"
+
