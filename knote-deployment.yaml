@@ -4,7 +4,6 @@ metadata:
   name: knote-ops
   namespace: default
 spec:
-  replicas: 3
   selector:
     matchLabels:
       run: knote
