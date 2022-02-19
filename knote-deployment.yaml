@@ -28,6 +28,18 @@ spec:
           value: mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017/dev?readPreference=secondary&replicaSet=rs0
         - name: server.shutdown
           value: graceful
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+        lifecyle:
+          preStop:
+            exec:
+              command: ["sh", "-c", "sleep 15"]
       terminationGracePeriodSeconds: 60
       affinity:
         nodeAffinity:
