@@ -39,8 +39,7 @@ spec:
         lifecyle:
           preStop:
             exec:
-              command: ["sh", "-c", "sleep 15"]
-      terminationGracePeriodSeconds: 60
+              command: ["sh", "-c", "sleep 30"]
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
