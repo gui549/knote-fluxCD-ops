@@ -4,7 +4,7 @@ metadata:
   name: knote-hpa
   namespace: default
 spec:
-  maxReplicas: 12
+  maxReplicas: 25
   minReplicas: 3
   scaleTargetRef:
     apiVersion: apps/v1
