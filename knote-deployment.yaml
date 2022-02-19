@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: knote-container
-        image: 567232876231.dkr.ecr.ap-northeast-3.amazonaws.com/knote-ops:0.1.2 # {"$imagepolicy": "flux-system:knote-ops"}
+        image: 567232876231.dkr.ecr.ap-northeast-3.amazonaws.com/knote-ops:0.1.3 # {"$imagepolicy": "flux-system:knote-ops"}
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -45,11 +45,11 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-              - matchExpressions:
-                - key: eks.amazonaws.com/nodegroup
-                  operator: In
-                  values:
-                  - kong-nodegroup-managed-ops-1
+            - matchExpressions:
+              - key: eks.amazonaws.com/nodegroup
+                operator: In
+                values:
+                - kong-nodegroup-managed-ops-1
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -63,7 +63,6 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       tolerations:
       - key: "run"
-        value: "knote"  
+        value: "knote"
         operator: "Equal"
         effect: "NoExecute"
-
