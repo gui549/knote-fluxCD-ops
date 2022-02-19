@@ -26,6 +26,8 @@ spec:
         env:
         - name: spring.data.mongodb.uri
           value: mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017/dev?readPreference=secondary&replicaSet=rs0
+        - name: server.shutdown
+          value: graceful
       terminationGracePeriodSeconds: 60
       affinity:
         nodeAffinity:
