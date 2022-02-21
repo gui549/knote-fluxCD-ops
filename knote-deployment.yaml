@@ -41,6 +41,8 @@ spec:
           httpGet:
             path: /actuator/health/readiness
             port: 8080
+          periodSeconds: 10
+          failureThreshold: 3
         lifecycle:
           preStop:
             exec:
