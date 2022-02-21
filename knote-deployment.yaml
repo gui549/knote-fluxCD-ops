@@ -39,7 +39,7 @@ spec:
           httpGet:
             path: /actuator/health/readiness
             port: 8080
-        lifecyle:
+        lifecycle:
           preStop:
             exec:
               command: ["sh", "-c", "sleep 90"]
