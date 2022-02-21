@@ -29,6 +29,8 @@ spec:
           value: mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017/dev?readPreference=secondary&replicaSet=rs0
         - name: server.shutdown
           value: graceful
+        - name: spring.lifecycle.timeout-per-shutdown-phase
+          value: 90s
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness
